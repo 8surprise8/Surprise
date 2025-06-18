@@ -1,0 +1,198 @@
+/* ملف CSS لتنسيق صفحة الملف الشخصي */
+body {
+    font-family: Arial, sans-serif; /* خط الصفحة */
+    background-color: #f4f4f4; /* لون خلفية الصفحة */
+    margin: 0;
+    padding: 20px;
+}
+/* صورة الخلفية تغطي الشاشة بالكامل */
+.profile-img {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: 0;
+    border: none;
+    box-shadow: none;
+    margin: 0;
+    border-radius: 0;
+    pointer-events: none; /* حتى لا تعيق التفاعل مع العناصر فوقها */
+}
+
+/* صورة البروفايل في المنتصف مع ظل سفلي فقط */
+.profile-2 {
+    position: relative;
+    z-index: 1;
+    width: 190px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 45%;
+    border: 3px solid #fff;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 12px 24px -8px rgba(0,0,0,0.35); /* ظل سفلي فقط */
+}
+
+/* تأكد أن العناصر فوق الخلفية */
+.top, .content {
+    position: relative;
+    z-index: 2;
+}
+
+.links-3d {
+    list-style: none;
+    padding: 0;
+    margin: 30px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.links-3d li {
+    width: 240px;
+}
+
+.links-3d a {
+    display: block;
+    width: 100%;
+    padding: 15px 0;
+    background: linear-gradient(145deg, #e0e0e0 0%, #ffffff 100%);
+    color: #222;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 18px;
+    box-shadow: 0 6px 18px -6px #b0b0b0, 0 2px 8px 0 #fff inset;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.links-3d a:hover {
+    background: linear-gradient(145deg, #c1e1fc 0%, #e0e0e0 100%);
+    color: #0077ff;
+    transform: translateY(-6px) scale(1.04);
+    box-shadow: 0 12px 24px -8px #90caf9, 0 2px 8px 0 #fff inset;
+}
+
+.bubbles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 3;
+    overflow: hidden;
+}
+.bubble {
+    position: absolute;
+    bottom: -100px;
+    border-radius: 50%;
+    animation: rise 10s linear infinite;
+    will-change: transform, opacity;
+    filter: blur(0.5px);
+    transition: opacity 0.3s;
+}
+@keyframes rise {
+    to {
+        transform: translateY(-110vh) scale(1.1);
+        opacity: 0;
+    }
+}
+.popup-3d {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(30, 42, 80, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(3px);
+}
+.popup-content {
+    background: linear-gradient(135deg, #e0e7ff 0%, #b3c6ff 100%);
+    border-radius: 24px;
+    box-shadow: 0 12px 32px -8px #5c6bc0, 0 2px 8px 0 #fff inset;
+    padding: 40px 60px;
+    text-align: center;
+    position: relative;
+    min-width: 300px;
+    animation: popupAppear 0.4s cubic-bezier(.68,-0.55,.27,1.55);
+}
+@keyframes popupAppear {
+    0% { transform: scale(0.7) rotateY(30deg); opacity: 0; }
+    100% { transform: scale(1) rotateY(0); opacity: 1; }
+}
+.phone-number {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #283593;
+    margin: 20px 0;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 8px #b3c6ff;
+}
+.arrows {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 2.2rem;
+    color: #1976d2;
+    text-shadow: 0 2px 8px #b3c6ff;
+}
+.arrow {
+    margin: 0 10px;
+    animation: arrowMove 1.2s infinite alternate;
+}
+.arrow:nth-child(2) { animation-delay: 0.3s; }
+.arrow:nth-child(3) { animation-delay: 0.6s; }
+.arrow:nth-child(4) { animation-delay: 0.9s; }
+@keyframes arrowMove {
+    to { transform: scale(1.2) translateY(-6px); color: #42a5f5; }
+}
+.close-btn {
+    margin-top: 18px;
+    padding: 8px 24px;
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px #b3c6ff;
+    transition: background 0.2s;
+}
+.close-btn:hover {
+    background: #0d47a1;
+}
+.popup-title {
+    font-size: 1.2rem;
+    color: #1976d2;
+    font-weight: bold;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px #b3c6ff;
+}
+#moving-images {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 5;
+}
+.moving-img {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    transition: filter 0.2s;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.18));
+    user-select: none;
+    pointer-events: none;
+}

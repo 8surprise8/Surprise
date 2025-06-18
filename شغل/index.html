@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>abdo klil</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="top">
+        <img src="99.jpg" alt="خلفية الموقع" class="profile-img">
+        <div class="bubbles"></div>
+        <img src="WhatsApp Image 2025-06-18 at 15.31.24_dac595be.jpg" class="profile-2">
+        <div class="links-3d">
+            <div style="margin-top: 15px;">
+                <ul style="list-style: none; padding: 0;">
+                    <li><a href="https://www.facebook.com/088Abdelrahman880/?locale=ar_AR" target="_blank">✔facebook✔</a></li>
+                    <li><a href="https://wa.me/qr/FOJUGPWOEW77G1" target="_blank">☎ whatsApp ☎</a></li>
+                    <li><a href="https://www.instagram.com/088abdelrahman880?igsh=MXVpMm9vbXJnejRsZw=="onclick="showEmailPopup(event) target="_blank>instagram</a></li>
+                    <li><a href="https://www.tiktok.com/@surprise...777" target="_blank">😎tiktok😎</a></li>
+                    <li><a href="#" onclick="showPopup(event)">📞phon nember📞</a></li>
+                    <li><a href="#" onclick="showEmailPopup(event)">✉ Gmail ✉</a></li>
+                    <li><a href="https://www.threads.net/@088abdelrahman880" target="_blank">@Threads@</a></li>
+                    <!-- أضف أي روابط أخرى هنا -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="phone-popup" class="popup-3d" style="display:none;">
+        <div class="popup-content">
+            <div class="popup-title">لا تنسَ تحط ليك على الصفحة</div>
+            <div class="phone-number">01226722197</div>
+            <button class="close-btn" onclick="closePopup()">إغلاق</button>
+        </div>
+    </div>
+    <div id="email-popup" class="popup-3d" style="display:none;">
+        <div class="popup-content">
+            <div class="popup-title">اوعة تنسي تحط ليك على الصفحة</div>
+            <div class="phone-number">abdoklil510@gmail.com</div>
+            <button class="close-btn" onclick="closeEmailPopup()">إغلاق</button>
+        </div>
+    </div>
+    <div class="popup-title">اوعة تنسي  تحط ليك على الصفحة</div>
+    <script>
+    const bubbleColors = [
+        'radial-gradient(circle at 30% 30%, #b3e5fc, #81d4fa 60%, #0288d1 100%)',
+        'radial-gradient(circle at 70% 70%, #ffb3ba, #ffdfba 60%, #ff8b94 100%)',
+        'radial-gradient(circle at 50% 20%, #baffc9, #bae1ff 60%, #36cfc9 100%)',
+        'radial-gradient(circle at 60% 80%, #f3bfff, #e0b3ff 60%, #a259f7 100%)',
+        'radial-gradient(circle at 40% 60%, #ffe29a, #ffd6e0 60%, #ffb347 100%)'
+    ];
+    for(let i=0; i<20; i++){
+        let bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        let size = Math.random() * 60 + 30;
+        bubble.style.width = bubble.style.height = size + 'px';
+        bubble.style.left = Math.random() * 100 + 'vw';
+        bubble.style.background = bubbleColors[Math.floor(Math.random()*bubbleColors.length)];
+        bubble.style.boxShadow = `0 8px 24px 0 rgba(2,136,209,0.15), 0 2px 8px 0 #fff inset`;
+        bubble.style.opacity = Math.random() * 0.4 + 0.3;
+        bubble.style.animationDuration = (Math.random()*5+7) + 's';
+        bubble.style.animationDelay = (-Math.random()*10) + 's';
+        document.querySelector('.bubbles').appendChild(bubble);
+    }
+
+    function showPopup(e) {
+        e.preventDefault();
+        document.getElementById('phone-popup').style.display = 'flex';
+    }
+
+    function closePopup() {
+        document.getElementById('phone-popup').style.display = 'none';
+    }
+
+    function showEmailPopup(e) {
+        e.preventDefault();
+        document.getElementById('email-popup').style.display = 'flex';
+    }
+
+    function closeEmailPopup() {
+        document.getElementById('email-popup').style.display = 'none';
+    }
+    </script>
+</body>
+</html>
