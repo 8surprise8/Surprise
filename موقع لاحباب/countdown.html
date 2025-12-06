@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>عد تنازلي - عيد ميلاد</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* small page-specific styles */
+    body{font-family:'Reem Kufi', 'Cairo', system-ui, Arial, sans-serif}
+    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:28px}
+    .box{width:100%;max-width:560px;background:linear-gradient(180deg,#fff6fb,#fff);border-radius:16px;padding:34px;box-shadow:0 12px 40px rgba(16,24,40,0.10);text-align:center}
+    .box h1{margin:0 0 14px 0;font-size:2rem;color:var(--accent)}
+    .controls{margin-top:18px;display:flex;gap:12px;justify-content:center;align-items:center}
+    .btn{background:linear-gradient(90deg,var(--accent),#ff6fa0);color:#fff;border:none;padding:10px 20px;border-radius:12px;font-size:1.05rem;font-weight:700;cursor:pointer;box-shadow:0 8px 22px rgba(255,59,130,0.16)}
+    .counter{margin-top:20px;font-size:5rem;color:#ff2d55;font-weight:900;transition:transform .18s ease}
+    .cake{margin-top:22px;display:flex;flex-direction:column;align-items:center}
+    .cake .pop{transform-origin:center;animation:pop .9s ease both;}
+    .cake .cake-title{color:#000;font-weight:900;font-size:1.08rem;margin-bottom:6px}
+    .cake .cake-love{color:#ff2d55;font-weight:900;font-size:1.2rem;margin-bottom:8px}
+    .cake .cake-name{color:#000;font-weight:800;font-size:1.05rem;margin-bottom:6px}
+    @keyframes pop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.05);opacity:1}100%{transform:scale(1);opacity:1}}
+    .hidden{display:none}
+    .finish-btn{margin-top:14px;display:inline-block;background:linear-gradient(90deg,#ff6fa0,var(--accent));color:#fff;border:none;padding:10px 20px;border-radius:12px;font-size:1.05rem;font-weight:800;cursor:pointer;box-shadow:0 10px 26px rgba(255,59,130,0.2)}
+    @media (max-width:420px){.box{padding:22px}.counter{font-size:3.6rem}}
+  </style>
+</head>
+<body>
+  <div class="bubbles" aria-hidden="true"></div>
+  <div class="wrap">
+    <main class="box" role="main">
+      <h1>جاهزة للعدّ؟ 🎉</h1>
+      <p class="muted">اضغطي على الزر لبدء العد التنازلي الصوتي من 10.</p>
+
+      <div class="controls">
+        <button id="startBtn" class="btn">ابدأي العد</button>
+        <button id="cancelBtn" class="btn" style="background:#aaa;box-shadow:none;">إلغاء</button>
+      </div>
+
+      <div id="counter" class="counter hidden" aria-live="assertive">10</div>
+
+      <div id="cake" class="cake hidden" aria-hidden="true">
+        <div class="cake-title">عيد ميلاد سعيد</div>
+        <div class="cake-love">بحبك</div>
+        <div class="cake-name">بسملة</div>
+        <!-- improved cake SVG with candles and sprinkles -->
+        <svg class="pop" width="220" height="160" viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <radialGradient id="g1" cx="50%" cy="30%">
+              <stop offset="0%" stop-color="#fff7fb"/>
+              <stop offset="100%" stop-color="#ffd6e6"/>
+            </radialGradient>
+          </defs>
+          <g fill="none" fill-rule="evenodd">
+            <rect x="20" y="80" width="180" height="60" rx="14" fill="#fff7fb" stroke="#ffd6e6"/>
+            <rect x="30" y="90" width="160" height="44" rx="10" fill="#ff3b82"/>
+            <!-- sprinkles -->
+            <g stroke="#fff" stroke-linecap="round" stroke-width="3">
+              <path d="M50 110 l8 -8" stroke="#ffd166"/>
+              <path d="M80 115 l10 -6" stroke="#ffd166"/>
+              <path d="M120 108 l-8 -10" stroke="#fff"/>
+              <path d="M150 112 l6 -8" stroke="#ffe066"/>
+            </g>
+            <!-- candles -->
+            <g transform="translate(60 40)">
+              <rect x="0" y="30" width="8" height="36" rx="2" fill="#ffd166"/>
+              <rect x="28" y="30" width="8" height="36" rx="2" fill="#ffd166"/>
+              <rect x="56" y="30" width="8" height="36" rx="2" fill="#ffd166"/>
+              <!-- flames -->
+              <g fill="#fff1b8">
+                <ellipse cx="4" cy="24" rx="4" ry="6" fill="#ffd166"/>
+                <ellipse cx="32" cy="24" rx="4" ry="6" fill="#ffd166"/>
+                <ellipse cx="60" cy="24" rx="4" ry="6" fill="#ffd166"/>
+              </g>
+            </g>
+            <text x="110" y="60" font-family="Reem Kufi, Arial, sans-serif" font-size="18" fill="#ffffff" font-weight="700" text-anchor="middle">عيد ميلاد سعيد</text>
+          </g>
+        </svg>
+        <button id="finishBtn" class="finish-btn hidden" type="button"> لسا يا عمرى دوسي يلا 💕😉</button>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    (function(){
+      const startBtn = document.getElementById('startBtn');
+      const cancelBtn = document.getElementById('cancelBtn');
+      const counterEl = document.getElementById('counter');
+      const cakeEl = document.getElementById('cake');
+      let timer = null;
+      let current = 10;
+
+      // speech setup: wait for voices to load and pick an Arabic voice if available
+      let selectedVoice = null;
+      function loadVoices(){
+        const voices = window.speechSynthesis.getVoices() || [];
+        if(voices.length === 0) return false;
+        selectedVoice = voices.find(v => /ar|Arabic/i.test(v.lang) || /Arabic/i.test(v.name)) || voices[0];
+        return true;
+      }
+      // attempt to load immediately, otherwise wait for event
+      if(!loadVoices()){
+        window.speechSynthesis.addEventListener('voiceschanged', function(){ loadVoices(); });
+      }
+
+      // small beep using WebAudio (short click) for each tick
+      let audioCtx = null;
+      function beep(){
+        try{
+          if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          const o = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+          o.type = 'sine';
+          o.frequency.value = 950;
+          g.gain.value = 0.0001;
+          o.connect(g);
+          g.connect(audioCtx.destination);
+          const now = audioCtx.currentTime;
+          g.gain.setValueAtTime(0.0001, now);
+          g.gain.exponentialRampToValueAtTime(0.08, now + 0.01);
+          o.start(now);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
+          o.stop(now + 0.19);
+        }catch(e){/* ignore audio errors */}
+      }
+
+      function speak(text){
+        // play beep then speak number (better UX)
+        try{ beep(); }catch(e){}
+        try{
+          if('speechSynthesis' in window){
+            const utter = new SpeechSynthesisUtterance(text.toString());
+            if(selectedVoice) utter.voice = selectedVoice;
+            utter.lang = selectedVoice ? selectedVoice.lang : 'ar-SA';
+            // prefer short utterance
+            utter.rate = 1.05;
+            window.speechSynthesis.speak(utter);
+          }
+        }catch(e){/* ignore */}
+      }
+
+      function showCounter(){
+        cakeEl.classList.add('hidden');
+        counterEl.textContent = current;
+        counterEl.classList.remove('hidden');
+      }
+
+      function finish(){
+        counterEl.classList.add('hidden');
+        cakeEl.classList.remove('hidden');
+        // celebrate sound using speech (personalized)
+        speak('كل سنة وانتِ طيبة يا بسملة');
+        // show finish button
+        const finishBtn = document.getElementById('finishBtn');
+        if(finishBtn){ finishBtn.classList.remove('hidden'); finishBtn.addEventListener('click', function(){ window.location.href = 'Untitled-1.html'; }); }
+        startBtn.disabled = false;
+      }
+
+      function start(){
+        // reset
+        current = 10;
+        showCounter();
+        // If speechSynthesis is available and voices loaded, chain via onend so audio and display sync
+        if ('speechSynthesis' in window){
+          const speakNumber = function(num){
+            counterEl.textContent = num;
+            counterEl.classList.remove('hidden');
+            // create utterance for this number
+            const utter = new SpeechSynthesisUtterance(num.toString());
+            if(selectedVoice) utter.voice = selectedVoice;
+            utter.lang = selectedVoice ? selectedVoice.lang : 'ar-SA';
+            utter.rate = 1.05;
+            // play short beep just before speaking
+            try{ beep(); }catch(e){}
+            // small delay to let beep start
+            setTimeout(()=>{
+              // speak and wait for end
+              utter.onend = function(){
+                // decrement and continue or finish
+                current -= 1;
+                if(current >= 0){
+                  speakNumber(current);
+                } else {
+                  finish();
+                }
+              };
+              window.speechSynthesis.speak(utter);
+            }, 140);
+          };
+          speakNumber(current);
+        } else {
+          // fallback: use interval but slightly slower to allow manual audio
+          showCounter();
+          timer = setInterval(()=>{
+            current -= 1;
+            if(current >= 0){
+              showCounter();
+              speak(current);
+            }
+            if(current <= 0){
+              clearInterval(timer);
+              timer = null;
+              finish();
+            }
+          }, 1300);
+        }
+      }
+
+      startBtn.addEventListener('click', function(){
+        if(timer) return; // already running
+        startBtn.disabled = true;
+        start();
+      });
+
+      cancelBtn.addEventListener('click', function(){
+        if(timer){ clearInterval(timer); timer = null; }
+        window.speechSynthesis.cancel();
+        counterEl.classList.add('hidden');
+        cakeEl.classList.add('hidden');
+        const finishBtn2 = document.getElementById('finishBtn'); if(finishBtn2) finishBtn2.classList.add('hidden');
+        startBtn.disabled = false;
+      });
+
+    })();
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>
