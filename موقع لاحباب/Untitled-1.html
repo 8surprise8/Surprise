@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#ffe6f0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>هدية لحبيبتي</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bubbles" aria-hidden="true"></div>
+  <main class="card">
+    <h1>حببتي الصغيرة</h1>
+    <p class="subline">انت اجمل شئ</p>
+    <p class="message">أنتِ أجمل شيء صار في حياتي. هذه صفحة صغيرة لأقول لكِ كم أحبك.</p>
+
+    <div class="photo">
+      <img src="صور/1 (2).jpeg" alt="صورتنا" id="photo" />
+    </div>
+
+    <!-- زرار تحت الصورة -->
+    <div class="photo-actions">
+      <button id="reveal">إضغط هنا للمفاجأة 🎁</button>
+    </div>
+
+    <div id="surprise" class="hidden">
+      <p>أنا أحبك كثيرًا — كل يوم أكتر من اليوم اللي قبله.</p>
+      <audio id="song" controls>
+        <source src="mp3/WhatsApp Audio 2025-12-05 at 9.08.56 PM.mpeg" type="audio/mpeg">
+      </audio>
+      <div class="surprise-actions">
+        <button id="afterSongBtn">يلا بقولك بحبك💋🌹</button>
+      </div>
+    </div>
+  </main>
+  <script>
+    // Navigate to gallery when afterSongBtn is clicked
+    (function(){
+      const afterBtn = document.getElementById('afterSongBtn');
+      if(afterBtn) {
+        afterBtn.addEventListener('click', function(){
+          window.location.href = 'gallery.html';
+        });
+      }
+    })();
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

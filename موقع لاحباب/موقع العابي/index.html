@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لعبة الحب 💕</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Additional floating hearts with Basmala name */
+        .floating-heart {
+            position: fixed;
+            pointer-events: none;
+            font-weight: 800;
+            z-index: 0;
+            animation: float-hearts 15s infinite ease-in-out;
+            font-family: 'Cairo', sans-serif;
+        }
+        .heart-1 { top: 25%; left: 8%; font-size: 1.6rem; opacity: 0.18; color: #DE5D83; animation-delay: -2s; }
+        .heart-2 { top: 60%; right: 10%; font-size: 1.8rem; opacity: 0.2; color: #CA1F7B; animation-delay: -5s; }
+        .heart-3 { top: 40%; left: 85%; font-size: 1.5rem; opacity: 0.16; color: #E52B50; animation-delay: -8s; }
+        .heart-4 { top: 75%; left: 20%; font-size: 1.7rem; opacity: 0.19; color: #AB274F; animation-delay: -11s; }
+        .heart-5 { top: 15%; right: 25%; font-size: 1.6rem; opacity: 0.17; color: #CC8899; animation-delay: -14s; }
+        .heart-6 { top: 50%; left: 5%; font-size: 1.5rem; opacity: 0.15; color: #DE5D83; animation-delay: -17s; }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts with Basmala name -->
+    <div class="floating-heart heart-1">💕 بسملة 💕</div>
+    <div class="floating-heart heart-2">💖 بسملة 💖</div>
+    <div class="floating-heart heart-3">💗 بسملة 💗</div>
+    <div class="floating-heart heart-4">💝 بسملة 💝</div>
+    <div class="floating-heart heart-5">❤️ بسملة ❤️</div>
+    <div class="floating-heart heart-6">🌹 بسملة 🌹</div>
+    <button id="toggle-music-list" style="position: fixed; top: 10px; left: 10px; z-index: 10001; background: linear-gradient(135deg, #DE5D83, #CA1F7B); color: #fff; border: none; border-radius: 12px; padding: 8px 12px; font-size: 0.9rem; font-family: 'Cairo', sans-serif; font-weight: bold; cursor: pointer; box-shadow: 0 4px 16px rgba(222, 93, 131, 0.3);">🎵 الموسيقى</button>
+    <div style="display: flex; width: 100vw; height: 100vh;">
+        <aside id="music-list" style="width: 220px; background: linear-gradient(180deg, rgba(42, 21, 32, 0.95), rgba(26, 13, 21, 0.98)); backdrop-filter: blur(20px); color: #fff; padding: 20px 10px 20px 10px; border-radius: 0 18px 18px 0; box-shadow: 4px 0 24px rgba(171, 39, 79, 0.3); display: flex; flex-direction: column; gap: 18px; align-items: stretch; transition: transform 0.3s, opacity 0.3s; border-right: 2px solid rgba(222, 93, 131, 0.3);">
+            <h2 style="font-size: 1.2rem; margin-bottom: 10px; text-align: center; color: #DE5D83; font-weight: 800; text-shadow: 0 2px 8px rgba(222, 93, 131, 0.4);">🎶 قائمة الأغاني 🎶</h2>
+            <button class="song-btn" data-src="mp3/0 (2).mp3">تامر عاشور ذكرايات</button>
+            <button class="song-btn" data-src="mp3/0 (1).mp3">احمد سعد </button>
+            <button class="song-btn" data-src="mp3/0 (4).mp3">اونطه في اونطة</button>
+            <button class="song-btn" data-src="mp3/0 (6).mp3"> الي نسو فيا بيتي نيتوهش</button>
+            <audio id="audio-player" controls style="width: 100%; margin-top: 20px;"></audio>
+        </aside>
+        <main style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <h1>💕 لعبة الحب والرومانسية 💕</h1>
+            <div id="game-board"></div>
+            <div id="score">النتيجة: <span id="score-value">0</span></div>
+            <div id="player-score">اسكورك: <span id="player-score-value">0</span></div>
+            <button onclick="startGame()">💖 ابدأ اللعبة 💖</button>
+            <div id="touch-controls">
+                <div class="arrow-row">
+                    <button class="arrow" id="up">⬆️</button>
+                </div>
+                <div class="arrow-row">
+                    <button class="arrow" id="left">➡️</button>
+                    <button class="arrow" id="down">⬇️</button>
+                    <button class="arrow" id="right">⬅️</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="snake.js"></script>
+    <script>
+    // تشغيل الأغنية عند الضغط
+    document.querySelectorAll('.song-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const src = this.getAttribute('data-src');
+            const audio = document.getElementById('audio-player');
+            audio.src = src;
+            audio.play();
+        });
+    });
+    // إظهار/إخفاء قائمة الأغاني
+    const aside = document.getElementById('music-list');
+    const toggleBtn = document.getElementById('toggle-music-list');
+    let visible = true;
+    toggleBtn.addEventListener('click', function() {
+        visible = !visible;
+        if (visible) {
+            aside.style.display = 'flex';
+        } else {
+            aside.style.display = 'none';
+        }
+    });
+    </script>
+</body>
+</html>
